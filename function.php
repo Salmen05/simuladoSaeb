@@ -14,6 +14,20 @@ function select($fields, $table)
         echo ('ERROR - ' . $e->getMessage());
     }
 }
+function selectWhere($fields, $table, $where, $whereValue)
+{
+    try {
+        $conn = connect();
+        $conn->beginTransaction();
+        $select = $conn->prepare("SELECT $fields FROM $table WHERE $where = $whereValue");
+        $select->execute();
+        $conn->commit();
+        return $select;
+    } catch (PDOException $e) {
+        $conn->rollBack();
+        echo ('ERROR - ' . $e->getMessage());
+    }
+}
 function delete($table, $where, $id)
 {
     try {
