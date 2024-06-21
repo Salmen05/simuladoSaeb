@@ -67,21 +67,94 @@ function addTurma(idprofessor) {
             btnAddTurma.disabled = true;
             const url = "./insert.php"
             const formData = new FormData(formAddTurma);
-            formData.append("idprofessor", idprofessor)
+            formData.append("idprofessor", idprofessor);
             fetch(url, {
                 headers: {
                     'Accept': 'application/json'
                 },
-                bodu: formData,
+                body: formData,
                 method: 'POST'
             })
                 .then(response => response.json())
                 .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: "Turma adicionada com sucesso!",
+                            text: "Você já pode verificar a turma na tabela.",
+                            icon: "success",
+                        });
+                        modalAddTurma.hide();
+                        loadContent('turma');
+                    } else {
+                        Swal.fire({
+                            title: "Não foi possível adicionar a turma!",
+                            text: "Foi encontrado um erro ao registrar a turma.",
+                            icon: "error",
+                        });
+                        formAddTurma.reset();
+                    };
                     console.log(data);
                 })
         }
     })
-
+}
+function deletarTurma(idturma) {
+    const url = "./rowCount.php";
+    const formData = new FormData();
+    formData.append("idturma", idturma);
+    fetch(url, {
+        headers: {
+            'Accept': 'application/json'
+        },
+        body: formData,
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    title: "Oops!",
+                    text: "Ainda existem atividades para a turma realizar.",
+                    icon: "error",
+                });
+            } else {
+                const modalDeleteTurma = new bootstrap.Modal(document.querySelector("#modalDeleteTurma"));
+                const bodyModalDeleteTurma = document.querySelector("#bodyModalDeleteTurma");
+                const modalDeleTurmaBtn = document.querySelector("#modalDeleTurmaBtn");
+                modalDeleteTurma.show();
+                bodyModalDeleteTurma.innerHTML = `Você tem certeza que deseja deletar a turma ${idturma}?`;
+                modalDeleTurmaBtn.addEventListener("click", function () {
+                    const url2 = './delete.php';
+                    fetch(url2, {
+                        headers: {
+                            'Accept': 'application/json'
+                        },
+                        body: formData,
+                        method: 'POST'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                modalDeleteTurma.hide();
+                                Swal.fire({
+                                    title: "Sucesso!",
+                                    text: "Turma deletada com sucesso.",
+                                    icon: "success",
+                                });
+                                modalDeleteTurma.hide();
+                                loadContent('turma');
+                            } else {
+                                Swal.fire({
+                                    title: "Oops!",
+                                    text: "Erro ao deletar turma.",
+                                    icon: "error",
+                                });
+                                console.log(data);
+                            }
+                        })
+                })
+            }
+        })
 }
 function loadContent(page) {
     const url = "./control.php";

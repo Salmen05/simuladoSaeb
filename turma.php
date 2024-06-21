@@ -10,7 +10,8 @@ $idprofessor = $_SESSION['idprofessor'];
         <thead>
             <tr>
                 <th scope="col">Número</th>
-                <th scope="col">First</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@ $idprofessor = $_SESSION['idprofessor'];
                     <tr>
                         <th scope="row"><?php echo ($idturma) ?></th>
                         <td><?php echo ($nome) ?></td>
+                        <td><button type="button" class="btn btn-danger me-1" onclick="deletarTurma(<?php echo ($idturma) ?>)">Deletar</button><button type="button" class="btn btn-success">Visualizar</button></td>
                     </tr>
             <?php
                 }
@@ -32,7 +34,7 @@ $idprofessor = $_SESSION['idprofessor'];
             } ?>
         </tbody>
     </table>
-</div>
+</div> <!-- //? Modal cadastrar -->
 <div class="modal fade" id="modalAddTurma" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -56,6 +58,23 @@ $idprofessor = $_SESSION['idprofessor'];
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 <button type="button" class="btn btn-primary" id="btnAddTurma">Registrar</button>
+            </div>
+        </div>
+    </div>
+</div> <!-- //! Modal excluir -->
+<div class="modal fade" id="modalDeleteTurma" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 h2" id="staticBackdropLabel">Atenção!</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="bodyModalDeleteTurma">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-danger" id="modalDeleTurmaBtn">Deletar</button>
             </div>
         </div>
     </div>
