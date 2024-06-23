@@ -25,7 +25,7 @@ $idprofessor = $_SESSION['idprofessor'];
                     <tr>
                         <th scope="row"><?php echo ($idturma) ?></th>
                         <td><?php echo ($nome) ?></td>
-                        <td><button type="button" class="btn btn-danger me-1" onclick="deletarTurma(<?php echo ($idturma) ?>)">Deletar</button><button type="button" class="btn btn-success">Visualizar</button></td>
+                        <td><button type="button" class="btn btn-danger me-1" onclick="deletarTurma(<?php echo ($idturma) ?>)">Deletar</button><button type="button" class="btn btn-success" onclick="visualizarTurma(<?php echo ($idturma) ?>)">Visualizar</button></td>
                     </tr>
             <?php
                 }

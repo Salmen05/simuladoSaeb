@@ -25,7 +25,7 @@ if (isset($_SESSION['idprofessor'])) {
 <body>
     <div id="navBar" class="bg-bg-body-tertiary">
         <div style=" width: 100%; display: flex; justify-content: space-between;">
-            <h3 class="ms-3"><?php echo ($nomeProfessor) ?></h3>
+            <h3 class="ms-3"><a href="#" onclick="loadContent('turma')"><?php echo ($nomeProfessor) ?></a></h3>
             <a class="btn btn-danger d-flex" href="logout.php">Sair</a>
         </div>
         <nav class="navbar">

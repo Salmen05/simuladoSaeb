@@ -156,6 +156,23 @@ function deletarTurma(idturma) {
             }
         })
 }
+function visualizarTurma(idturma) {
+    const formData = new FormData();
+    formData.append("idturma", idturma);
+    const url = "./atividade.php";
+    fetch(url, {
+        headers: {
+            'Accept': 'application/json'
+        },
+        body: formData,
+        method: 'POST'
+    })
+        .then(response => response.text())
+        .then(data => { document.querySelector("#conteudo").innerHTML = data })
+}
+function addAtividade(idturma) {
+
+}
 function loadContent(page) {
     const url = "./control.php";
     const formData = new FormData();
