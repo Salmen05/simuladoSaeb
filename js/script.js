@@ -93,7 +93,10 @@ function addTurma(idprofessor) {
                         });
                         formAddTurma.reset();
                     };
+                })
+                .catch(error => {
                     console.log(data);
+                    console.log(error);
                 })
         }
     })
@@ -171,6 +174,53 @@ function visualizarTurma(idturma) {
         .then(data => { document.querySelector("#conteudo").innerHTML = data })
 }
 function addAtividade(idturma) {
+    const addAtividadeModal = new bootstrap.Modal(document.querySelector("#addAtividadeModal"));
+    addAtividadeModal.show();
+    const addAtividadeBtn = document.querySelector("#addAtividadeBtn");
+    addAtividadeBtn.addEventListener("click", function () {
+        const addNomeAtividade = document.querySelector("#addNomeAtividade").value;
+        const alertAddAtividade = document.querySelector("#alertAddAtividade");
+        if (addNomeAtividade.length < 4) {
+            alertAddAtividade.style.display = 'block';
+        } else {
+            alertAddAtividade.style.display = 'none';
+            addAtividadeBtn.disabled = true;
+            const formAddAtividade = document.querySelector("#formAddAtividade");
+            const url = "./insert.php";
+            const formData = new FormData(formAddAtividade);
+            formData.append("idturma", idturma);
+            fetch(url, {
+                headers: {
+                    'Accept': 'application/json'
+                },
+                body: formData,
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: "Atividade adicionada com sucesso!",
+                            text: "Você já pode verificar a atividade na tabela.",
+                            icon: "success",
+                        });
+                        addAtividadeModal.hide();
+                        visualizarTurma(idturma);
+                    } else {
+                        Swal.fire({
+                            title: "Oops!",
+                            text: "Foi encontrado um erro ao registrar a atividade.",
+                            icon: "error",
+                        });
+                        formAddAtividade.reset();
+                    };
+                })
+                .catch(error => {
+                    console.log(data);
+                    console.log(error);
+                })
+        }
+    })
 
 }
 function loadContent(page) {
